@@ -1,6 +1,7 @@
 import urllib.request
 import zipfile
 import os
+import time
 
 url = 'https://www.e-stat.go.jp/gis/statmap-search/data?statsId=T000876&code=3622&downloadType=2'
 
@@ -10,3 +11,5 @@ with zipfile.ZipFile('output/sample.zip') as zip:
     zip.extractall('output/')
 
 os.remove('output/sample.zip')
+
+time.sleep(1)
