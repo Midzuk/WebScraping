@@ -5,31 +5,62 @@ import time
 import csv
 import glob
 
+filename = input('filename: ')
+
+header_num = int(input('header number: '))
+
+statsID = input('statsID: ')
+
+temps = glob.glob('output/temporary/*')
+
+for temp in temps:
+    os.remove(temp)
+
 meshes = []
 
 with open('mesh-code.csv', 'r') as f:
-    reader = csv.reader(f)
+    meshes = sum(csv.reader(f), [])
 
-    for row in reader:
-        meshes.append(row)
+#meshes = [str(y) + str(x) for y in range(36, 69) for x in range(22, 49)]
+#meshes_exist = []
 
 for mesh in meshes:
-    url = 'https://www.e-stat.go.jp/gis/statmap-search/data?statsId=T000876&code=%s&downloadType=2' % mesh
+    url = 'https://www.e-stat.go.jp/gis/statmap-search/data?statsId=%s&code=%s&downloadType=2' % (statsID, mesh)
 
-    urllib.request.urlretrieve(url, 'output/temporary/_.zip')
+    try:
+        urllib.request.urlretrieve(url, 'output/temporary/_.zip')
 
-    with zipfile.ZipFile('output/temporary/_.zip') as zip:
-        zip.extractall('output/temporary')
+        with zipfile.ZipFile('output/temporary/_.zip') as zip:
+            zip.extractall('output/temporary')
 
-    os.remove('output/temporary/_.zip')
+        os.remove('output/temporary/_.zip')
 
-    time.sleep(0.5)
+        time.sleep(0.2)
 
-temps = glob.glob('output/temporary*')
+    except:
+        print('Mesh %s is not exist' % mesh)
 
-print(temps)
+temps = glob.glob('output/temporary/*')
 
-'''
-with open('open.csv', 'a') as output:
-    pass
-'''
+with open('output/%s.csv' % filename, 'w') as f:
+    writer = csv.writer(f, lineterminator = '\n')
+
+    with open(temps[0], 'r') as t0:
+        reader = csv.reader(t0)
+        headers = []
+
+        for _ in range(0, header_num):
+            header = next(reader)
+            headers.append(header)
+
+        writer.writerows(headers)
+    
+    for temp in temps:
+        with open(temp, 'r') as t:
+            reader = csv.reader(t)
+            for _ in range(0, header_num): 
+                next(reader)
+            writer.writerows(reader)
+
+for temp in temps:
+    os.remove(temp)
