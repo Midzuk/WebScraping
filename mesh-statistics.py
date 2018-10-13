@@ -18,7 +18,7 @@ for temp in temps:
 
 meshes = []
 
-with open('mesh-code.csv', 'r') as f:
+with open('mesh-code.csv', 'r', encoding = 'utf_8_sig') as f:
     meshes = sum(csv.reader(f), [])
 
 #meshes = [str(y) + str(x) for y in range(36, 69) for x in range(22, 49)]
