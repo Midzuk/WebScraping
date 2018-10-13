@@ -9,6 +9,7 @@ filename = input('filename: ')
 
 header_num = int(input('header number: '))
 
+'''
 statsID = input('statsID: ')
 
 temps = glob.glob('output/temporary/*')
@@ -18,7 +19,7 @@ for temp in temps:
 
 meshes = []
 
-with open('mesh-code.csv', 'r', encoding = 'utf_8_sig') as f:
+with open('mesh-code.csv', 'r') as f:
     meshes = sum(csv.reader(f), [])
 
 #meshes = [str(y) + str(x) for y in range(36, 69) for x in range(22, 49)]
@@ -40,12 +41,13 @@ for mesh in meshes:
     except:
         print('Mesh %s is not exist' % mesh)
 
+'''
 temps = glob.glob('output/temporary/*')
 
-with open('output/%s.csv' % filename, 'w') as f:
+with open('output/%s.csv' % filename, 'w', encoding='cp932') as f:
     writer = csv.writer(f, lineterminator = '\n')
 
-    with open(temps[0], 'r') as t0:
+    with open(temps[0], 'r', encoding = 'cp932') as t0:
         reader = csv.reader(t0)
         headers = []
 
@@ -56,11 +58,11 @@ with open('output/%s.csv' % filename, 'w') as f:
         writer.writerows(headers)
     
     for temp in temps:
-        with open(temp, 'r') as t:
+        with open(temp, 'r', encoding = 'cp932') as t:
             reader = csv.reader(t)
             for _ in range(0, header_num): 
                 next(reader)
             writer.writerows(reader)
 
-for temp in temps:
-    os.remove(temp)
+#for temp in temps:
+#   os.remove(temp) 
