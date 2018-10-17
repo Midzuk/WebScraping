@@ -9,7 +9,6 @@ filename = input('filename: ')
 
 header_num = int(input('header number: '))
 
-'''
 statsID = input('statsID: ')
 
 temps = glob.glob('output/temporary/*')
@@ -41,7 +40,6 @@ for mesh in meshes:
     except:
         print('Mesh %s is not exist' % mesh)
 
-'''
 temps = glob.glob('output/temporary/*')
 
 with open('output/%s.csv' % filename, 'w', encoding='cp932') as f:
