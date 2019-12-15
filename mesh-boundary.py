@@ -29,7 +29,6 @@ with open('mesh-code.csv', 'r', encoding="utf-8") as f:
 
 for mesh in meshes:
     url = 'https://www.e-stat.go.jp/gis/statmap-search/data?dlserveyId=Q&code=%s&coordSys=1&format=shape&downloadType=5' % mesh
-
     try:
         urllib.request.urlretrieve(url, 'output/temporary/_.zip')
 
